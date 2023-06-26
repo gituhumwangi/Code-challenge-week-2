@@ -1,27 +1,38 @@
 //Get the Element Class name
 function getCharacters () {
     fetch('http://localhost:3000/characters')
-    .then(response => response.json)
+    .then(response => response.json())
     .then(data => {
-        fetchAnimalName(data)
+    fetchAnimalNames(data)
     })
 }
 
-function fetchAnimalNames(animals){
-    let character = document.getElementById("")
+function fetchAnimalNames(characters){
+    let zooAnimals = document.getElementById("wild")
 
-    animals.forEach(animal => {
-        let newElements = document.createElement("div")
-        newElements.classList = "stars"
-        newElements.innerHTML = animal.name
-        character.appendChild(newElements)
-        newElements.addEventListener("click", function(){
-            fetchCharactersImage(animal)
+    characters.forEach(characters => {
+        let newDiv = document.createElement("div")
+        newDiv.classList = "zoo"
+        newDiv.innerHTML = characters.name
+        zooAnimals.appendChild(newDiv)
+        newDiv.addEventListener("click", function(){
+            fetchCharactersImage(characters)
         })
         
     });
 }
 
-document.addEventListener('DOMContentLoaded', function(e){
-    fetchAnimalNames()
+function fetchCharactersImage(characters){
+    fetch (`http://localhost:3000/characters/${characters.id}`)
+    .then(response => response.json())
+    .then(data => {protray(data)})
+}
+function protray(characters) {
+    document.querySelector("#image").setAttribute("src", charaters.image)
+    document.querySelector("#name_display").innerText=characters.name
+    document.querySelector('#votes').innerText=characters.votes
+}
+
+document.addEventListener("DOMContentLoaded", function(event){
+    getCharacters()
 })
